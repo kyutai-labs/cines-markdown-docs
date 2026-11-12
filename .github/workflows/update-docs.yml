@@ -24,6 +24,8 @@ jobs:
       - uses: actions/checkout@v4
 
       - uses: astral-sh/setup-uv@v6
+        with:
+          cache-dependency-glob: scripts/generate.py
 
       - name: Regenerate Markdown
         run: uv run scripts/generate.py
