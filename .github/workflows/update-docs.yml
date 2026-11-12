@@ -8,6 +8,7 @@ on:
     branches: [main]
     paths:
       - scripts/**
+      - docs/**
       - .github/workflows/update-docs.yml
 
 permissions:
