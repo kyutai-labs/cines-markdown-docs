@@ -4,7 +4,8 @@
 # After a kill (Claude's own planned SIGTERM, or the watchdog), the resumed session gets a prompt
 # telling Claude to re-arm claude-cpu-watch.sh and carry on with its task.
 #
-# Usage:  ./claude-loop.sh [extra claude args...]     e.g. ./claude-loop.sh --permission-mode auto
+# Usage:  claude-loop.sh [extra claude args...]     e.g. claude-loop.sh --permission-mode auto
+#         Install it next to claude-cpu-watch.sh in ~/.local/bin and run it from the project directory.
 # Env:    CLAUDE_LOOP_SESSION=<uuid>  pick up an existing session instead of starting a new one
 #         CLAUDE_LOOP_NAME=<name>     Remote Control name (default: <host>-<dir>)
 #         CLAUDE_LOOP_LOG=<file>      restart log (default: ~/.claude/claude-loop.log)

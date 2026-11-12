@@ -15,13 +15,22 @@ cleanly at 14 minutes of CPU, before the watchdog kills it at 15.
 
 ## Setup
 
-1. Put both scripts in the same directory, for example your working directory. `claude-loop.sh` looks
-   for `claude-cpu-watch.sh` in its own directory.
-2. Start the loop inside tmux, so it survives SSH disconnects:
+1. Install both scripts in `~/.local/bin`, so you can run them from any project directory. Keep them
+   together: `claude-loop.sh` looks for `claude-cpu-watch.sh` in its own directory.
+
+   ```bash
+   mkdir -p ~/.local/bin
+   install -m 755 claude-code/claude-loop.sh claude-code/claude-cpu-watch.sh ~/.local/bin/
+   ```
+
+   `~/.local/bin` is usually on your `PATH` already. If `command -v claude-loop.sh` prints nothing, add
+   `export PATH="$HOME/.local/bin:$PATH"` to `~/.bashrc`.
+2. Start the loop inside tmux, so it survives SSH disconnects, from the directory Claude should work in:
 
    ```bash
    tmux new -s claude
-   ./claude-loop.sh --permission-mode auto     # any extra arguments are passed to claude
+   cd <your project>
+   claude-loop.sh --permission-mode auto     # any extra arguments are passed to claude
    ```
 
    To resume an existing conversation: `CLAUDE_LOOP_SESSION=<session uuid> ./claude-loop.sh`.
@@ -31,7 +40,7 @@ cleanly at 14 minutes of CPU, before the watchdog kills it at 15.
    ## CPU-time watchdog
    This session runs under claude-loop.sh on a login node that kills any process after 15 min of CPU time.
    - At session start, check whether claude-cpu-watch.sh is already running under your claude process. If it
-     isn't, start `<dir>/claude-cpu-watch.sh 840 5` with Bash `run_in_background`.
+     isn't, start `~/.local/bin/claude-cpu-watch.sh 840 5` with Bash `run_in_background`.
    - When it reports "CPU LIMIT NEAR", stop the background shells and Monitors that can't be resumed. Work
      started with setsid/nohup and Slurm jobs can keep running. Then run the `setsid nohup ... kill -TERM <pid>`
      command it prints and end your turn with one line.
@@ -65,7 +74,7 @@ A normal exit (`/exit`, Ctrl-D) is treated as you quitting. The session reopens 
 
 ## Notes
 
-- Editing `claude-loop.sh` doesn't change a loop that is already running, because bash parsed the whole
-  `while` loop when it entered it. To pick up changes, press `q` at the "restarting in 5s" prompt and start the
-  loop again with `CLAUDE_LOOP_SESSION=<session uuid>`.
+- To update, run the `install` command from step 1 again. A loop that is already running keeps its old code,
+  because bash parsed the whole `while` loop when it entered it. To pick up changes, press `q` at the
+  "restarting in 5s" prompt and start the loop again with `CLAUDE_LOOP_SESSION=<session uuid> claude-loop.sh`.
 - `claude-cpu-watch.sh` takes the threshold and poll interval as arguments: `claude-cpu-watch.sh [840] [5]`.
