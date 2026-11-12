@@ -27,5 +27,9 @@ A [GitHub Actions workflow](.github/workflows/update-docs.yml) regenerates `docs
 if anything changed. To run it locally:
 
 ```bash
-uv run scripts/generate.py
+uv run --locked scripts/generate.py
 ```
+
+Dependencies are pinned in the script header and hash-locked in `scripts/generate.py.lock`
+(`--locked` fails if the two disagree). GitHub Actions are pinned by commit SHA. To upgrade, bump the
+versions in the header and run `uv lock --script scripts/generate.py`.

@@ -1,9 +1,9 @@
 # /// script
 # requires-python = ">=3.11"
 # dependencies = [
-#   "requests>=2.31",
-#   "beautifulsoup4>=4.12",
-#   "markdownify>=0.13",
+#   "requests==2.34.2",
+#   "beautifulsoup4==4.15.0",
+#   "markdownify==1.2.3",
 # ]
 # ///
 """Mirror the CINES Adastra user documentation as Markdown.
