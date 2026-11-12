@@ -1,0 +1,326 @@
+<!-- Source: https://dci.dci-gitlab.cines.fr/webextranet/index.html -->
+<!-- Title: Adastra user documentation -->
+
+<a id="adastra-user-documentation"></a>
+
+# Adastra user documentation
+
+**Warning**
+
+TO READ BEFORE CONTINUING: Know that the documentation is always a work in progress and it may be slightly behind, or slight in advance of the current state of the machine. Do **not** forget to check the [Known issues](other/faq_and_known_issues.md#other-known-issues). No LLM is involved in the creation of this documentation (except for the virtual assistant).
+
+**Note**
+
+The CINES High Performance Computing (HPC) support team remains open and available for support. Users should follow normal support procedures when reporting issues or requesting help. Consider the guidelines for [Contacting CINES](other/contact.md#other-contact).
+
+Ask for help by opening a ticket using one of the two following options:
+
+- Emailing us at [svp@cines.fr](mailto:svp%40cines.fr);
+- Using this [GUI](https://support.cines.fr/otrs/customer.pl).
+
+**Note**
+
+The documentation is meant to be complete. If you find it too long, rely on the virtual assistant and ask it to summarize it for you. Also, you can use the search bar on your left.
+
+The manual can be seen as a relaxed specification of the product, it should describe in great detail what the user sees, and as such, it is the main product of CINES. The style must be precise, complete and accurately detailed. The definition must repeat the essentials yet all definitions must agree. This tend to make manual dull reading but precision is more important than liveliness. “The ideas are those of about ten men, but the casting of those decisions into prose specifications must be done by only one or two, if the consistency of prose and product is to be maintained” (from [The Mythical Man-Month by Fred Brooks](external_documentation_and_training_resources/index.md#learn-the-mythical-man-month)).
+
+This document is intended as a reference for the CINES’ computing community: les Chercheurs CalCulant au Cines (C4). However, we are still far from the level of completion mentioned above. We welcome comments on missing information, technical and typographical errors, etc..
+
+Some explicit requirements to follow this documentation is a basic understanding of the [Unix-like shell](https://en.wikipedia.org/wiki/Unix_shell), of the [Bash implementation](https://en.wikipedia.org/wiki/Bash_(Unix_shell)) and of the [environment variable concept](https://en.wikipedia.org/wiki/Environment_variable); you may find learning material [here](external_documentation_and_training_resources/index.md#learn-bash).
+
+A big problem with much documentation is that you often need to know the content before, so you can make sense of it when read. It’s a very good aide-mémoire, but if you don’t know what you’re doing or what you are looking for, it’s pretty much useless.
+
+Because it would be better to teach a man to fish instead of feeding him fish everyday we do not want to reduce our user to read a *monkey see monkey do* documentation (imitating something is not enough to really understand). This document tries to respect your time, to avoid repeating itself, to not be too verbose while still bringing real value and insights.
+
+You may benefit from reading the documentation linearly, but assuming you know what to look for, you should make use of the search bar functionality or the left-hand side.
+
+This document was last updated: Monday, 02 November 2026 16:15:09 +0100.
+
+<a id="user-policies"></a>
+
+<a id="cines-user-policies"></a>
+
+## User policies
+
+- [`User policy governing the use of computer resources of CINES`](https://dci.dci-gitlab.cines.fr/webextranet/_downloads/64d0992db9a2ff23f3f6ac17a3264b1e/charte_usage_ressources_informatiques_CINES.pdf);
+- [`User policy governing the use of the RENATER network`](https://dci.dci-gitlab.cines.fr/webextranet/_downloads/27b3759e319ff71052cf3546e3a369eb/charte_RENATER_fr.pdf);
+- [`Modalités d'accès aux ressources nationales`](https://dci.dci-gitlab.cines.fr/webextranet/_downloads/ba4f9d10c5fffffe46f94aa739cb9b45/Modalitesdacces.pdf).
+
+<a id="table-of-contents"></a>
+
+## Table of contents
+
+- [Adastra quick start](quick_start/index.md)
+  - [Get started in video](quick_start/index.md#get-started-in-video)
+  - [How to ask for help](quick_start/index.md#how-to-ask-for-help)
+  - [Registering an account](quick_start/index.md#registering-an-account)
+  - [Connecting to Adastra](quick_start/index.md#connecting-to-adastra)
+  - [Transferring sources to Adastra](quick_start/index.md#transferring-sources-to-adastra)
+  - [The module environment](quick_start/index.md#the-module-environment)
+  - [Compiling code](quick_start/index.md#compiling-code)
+  - [Running a compute job](quick_start/index.md#running-a-compute-job)
+  - [Submitting a job](quick_start/index.md#submitting-a-job)
+
+- [Adastra’s architecture](architecture/index.md)
+  - [System overview](architecture/index.md#system-overview)
+  - [Adastra’s hardware](architecture/index.md#adastra-s-hardware)
+  - [Adastra partitions summary](architecture/index.md#adastra-partitions-summary)
+  - [Adastra accelerated (MI250X) nodes](architecture/index.md#adastra-accelerated-mi250x-nodes)
+    - [Theoretical Flop performance](architecture/index.md#theoretical-flop-performance)
+    - [Memory and throughput](architecture/index.md#memory-and-throughput)
+    - [Architecture and interconnect](architecture/index.md#architecture-and-interconnect)
+  - [Adastra accelerated (MI300A) nodes](architecture/index.md#adastra-accelerated-mi300a-nodes)
+    - [Theoretical Flop performance](architecture/index.md#id1)
+    - [Memory and throughput](architecture/index.md#id2)
+    - [Architecture](architecture/index.md#architecture)
+  - [Adastra scalar nodes (GENOA)](architecture/index.md#adastra-scalar-nodes-genoa)
+    - [Theoretical Flop performance](architecture/index.md#id3)
+    - [Memory and throughput](architecture/index.md#id4)
+    - [Architecture](architecture/index.md#id5)
+  - [The preprocessing and postprocessing nodes (HPDA)](architecture/index.md#the-preprocessing-and-postprocessing-nodes-hpda)
+  - [System interconnect](architecture/index.md#system-interconnect)
+  - [Operating system](architecture/index.md#operating-system)
+  - [File systems](architecture/index.md#file-systems)
+  - [How many hours to ask for](architecture/index.md#how-many-hours-to-ask-for)
+
+- [Accessing Adastra](user_support/index.md)
+  - [Account opening](user_support/index.md#account-opening)
+  - [Connecting](user_support/index.md#connecting)
+    - [X11 forwarding](user_support/index.md#x11-forwarding)
+    - [Proxy](user_support/index.md#proxy)
+  - [Login unique](user_support/index.md#login-unique)
+    - [Listing the environment variables and their value](user_support/index.md#listing-the-environment-variables-and-their-value)
+    - [Listing associated projects](user_support/index.md#listing-associated-projects)
+    - [Switching project](user_support/index.md#switching-project)
+  - [Layout of common files and directories](user_support/index.md#layout-of-common-files-and-directories)
+    - [`.bashrc` file](user_support/index.md#bashrc-file)
+    - [`.ssh` directory](user_support/index.md#ssh-directory)
+    - [`.Xauthority` file](user_support/index.md#xauthority-file)
+- [Programming environment](user_support/index.md#programming-environment)
+  - [Module, why and how](user_support/index.md#module-why-and-how)
+    - [General usage](user_support/index.md#general-usage)
+    - [Looking for a specific module or an already installed software](user_support/index.md#looking-for-a-specific-module-or-an-already-installed-software)
+  - [CrayPE basics](user_support/index.md#craype-basics)
+  - [Changing CrayPE version](user_support/index.md#changing-craype-version)
+  - [Cray compiler wrapper](user_support/index.md#cray-compiler-wrapper)
+  - [Default libraries](user_support/index.md#default-libraries)
+  - [`PrgEnv` and compilers](user_support/index.md#prgenv-and-compilers)
+  - [`PrgEnv` mixing and subtleties](user_support/index.md#prgenv-mixing-and-subtleties)
+  - [Mixing `PrgEnv` and toolchain](user_support/index.md#mixing-prgenv-and-toolchain)
+  - [Targeting an architecture](user_support/index.md#targeting-an-architecture)
+  - [Intra-process parallelization technologies](user_support/index.md#intra-process-parallelization-technologies)
+    - [For **C/C++** codes](user_support/index.md#for-c-c-codes)
+    - [For **Fortran** codes](user_support/index.md#for-fortran-codes)
+  - [Some wrapper, preprocessor definitions, compiler and linker flags](user_support/index.md#some-wrapper-preprocessor-definitions-compiler-and-linker-flags)
+    - [Flags conversion for Fortran program](user_support/index.md#flags-conversion-for-fortran-program)
+    - [Vectorizing for GCC and Clang based compilers](user_support/index.md#vectorizing-for-gcc-and-clang-based-compilers)
+    - [Intel LLVM’s defaults](user_support/index.md#intel-llvm-s-defaults)
+    - [Debugging with `crayftn`](user_support/index.md#debugging-with-crayftn)
+    - [Debugging with `gfortran`](user_support/index.md#debugging-with-gfortran)
+    - [Making the Cray wrappers spew their implicit flags](user_support/index.md#making-the-cray-wrappers-spew-their-implicit-flags)
+    - [`crayftn` optimization level details](user_support/index.md#crayftn-optimization-level-details)
+    - [AOCC flags](user_support/index.md#aocc-flags)
+    - [Understanding your compiler](user_support/index.md#understanding-your-compiler)
+    - [Advanced tips and flags and environment variable for debugging](user_support/index.md#advanced-tips-and-flags-and-environment-variable-for-debugging)
+- [Job submission](user_support/index.md#job-submission)
+  - [The SLURM batch scheduler and job launcher](user_support/index.md#the-slurm-batch-scheduler-and-job-launcher)
+  - [Batch scripts](user_support/index.md#batch-scripts)
+    - [Shared mode](user_support/index.md#shared-mode)
+  - [Common SLURM submission options](user_support/index.md#common-slurm-submission-options)
+  - [Resource consumption and charging (accounting)](user_support/index.md#resource-consumption-and-charging-accounting)
+    - [Shared mode vs exclusive mode](user_support/index.md#shared-mode-vs-exclusive-mode)
+    - [Shared mode charging formula](user_support/index.md#shared-mode-charging-formula)
+  - [Quality Of Service (QoS) queues](user_support/index.md#quality-of-service-qos-queues)
+  - [`srun`](user_support/index.md#srun)
+  - [Interactive jobs](user_support/index.md#interactive-jobs)
+  - [Small job](user_support/index.md#small-job)
+    - [Allocating a single GPU](user_support/index.md#allocating-a-single-gpu)
+    - [Packing](user_support/index.md#packing)
+  - [Chained job](user_support/index.md#chained-job)
+  - [Job array](user_support/index.md#job-array)
+  - [Other common SLURM commands](user_support/index.md#other-common-slurm-commands)
+  - [Sequential SLURM steps in a SLURM allocation](user_support/index.md#sequential-slurm-steps-in-a-slurm-allocation)
+  - [Embarrassingly parallel SLURM steps in a SLURM allocation](user_support/index.md#embarrassingly-parallel-slurm-steps-in-a-slurm-allocation)
+  - [Embarrassingly parallel tasks in a SLURM step](user_support/index.md#embarrassingly-parallel-tasks-in-a-slurm-step)
+  - [Job state](user_support/index.md#job-state)
+  - [Job reason codes](user_support/index.md#job-reason-codes)
+  - [Monitoring and modifying batch jobs](user_support/index.md#monitoring-and-modifying-batch-jobs)
+    - [`scancel`: Cancel or signal a job](user_support/index.md#scancel-cancel-or-signal-a-job)
+    - [`squeue`: View the job queue](user_support/index.md#squeue-view-the-job-queue)
+    - [`sacct`: Get job accounting information](user_support/index.md#sacct-get-job-accounting-information)
+    - [`scontrol show job`: Get Detailed Job Information](user_support/index.md#scontrol-show-job-get-detailed-job-information)
+    - [Obtaining the energy consumption of a job](user_support/index.md#obtaining-the-energy-consumption-of-a-job)
+    - [GPU frequency capping](user_support/index.md#gpu-frequency-capping)
+  - [Coredump files](user_support/index.md#coredump-files)
+
+- [Data storage and transfers](data_storage_and_transfers/index.md)
+  - [Data and storage](data_storage_and_transfers/index.md#data-and-storage)
+    - [Accessing the storage areas](data_storage_and_transfers/index.md#accessing-the-storage-areas)
+    - [Additional storage characteristics](data_storage_and_transfers/index.md#additional-storage-characteristics)
+    - [Data storage good practices](data_storage_and_transfers/index.md#data-storage-good-practices)
+    - [Datasets](data_storage_and_transfers/index.md#datasets)
+  - [Data policies](data_storage_and_transfers/index.md#data-policies)
+    - [Quotas](data_storage_and_transfers/index.md#quotas)
+    - [Purge](data_storage_and_transfers/index.md#purge)
+    - [Data retention](data_storage_and_transfers/index.md#data-retention)
+    - [Retrieving from backups](data_storage_and_transfers/index.md#retrieving-from-backups)
+    - [Archives on STORE](data_storage_and_transfers/index.md#archives-on-store)
+  - [Data transfer](data_storage_and_transfers/index.md#data-transfer)
+    - [Between Adastra filesystems](data_storage_and_transfers/index.md#between-adastra-filesystems)
+    - [Between CINES and your laboratory](data_storage_and_transfers/index.md#between-cines-and-your-laboratory)
+    - [Between computing site (CCFR)](data_storage_and_transfers/index.md#between-computing-site-ccfr)
+    - [Tools to transfer Data](data_storage_and_transfers/index.md#tools-to-transfer-data)
+    - [Chaining `wdcp` data transfer and job](data_storage_and_transfers/index.md#chaining-wdcp-data-transfer-and-job)
+
+- [Data visualization and analytics](data_visualization_and_analytics/index.md)
+  - [Accessing the HPDA hardware](data_visualization_and_analytics/index.md#accessing-the-hpda-hardware)
+    - [SLURM reservation](data_visualization_and_analytics/index.md#slurm-reservation)
+    - [Remote desktop](data_visualization_and_analytics/index.md#remote-desktop)
+  - [HPDA related software](data_visualization_and_analytics/index.md#hpda-related-software)
+
+- [Adastra’s software stack](software_stack/index.md)
+  - [CINES’ Spack software stack](software_stack/cines_software_stack/spack.md)
+    - [Introduction](software_stack/cines_software_stack/spack.md#introduction)
+    - [Basic tools and libraries](software_stack/cines_software_stack/spack.md#basic-tools-and-libraries)
+    - [Extensible software stacks](software_stack/cines_software_stack/spack.md#extensible-software-stacks)
+    - [Using the CINES software stack](software_stack/cines_software_stack/spack.md#using-the-cines-software-stack)
+    - [Advanced module mixing](software_stack/cines_software_stack/spack.md#advanced-module-mixing)
+  - [CINES’ Guix software stack](software_stack/cines_software_stack/guix.md)
+    - [What is Guix?](software_stack/cines_software_stack/guix.md#what-is-guix)
+    - [Getting started](software_stack/cines_software_stack/guix.md#getting-started)
+    - [Creating portable bundles](software_stack/cines_software_stack/guix.md#creating-portable-bundles)
+    - [Support](software_stack/cines_software_stack/guix.md#support)
+  - [CINES’ Spack module catalog](software_stack/cines_software_stack/spack_products_catalog.md)
+    - [Currently in production or deprecated products](software_stack/cines_software_stack/spack_products_catalog.md#currently-in-production-or-deprecated-products)
+    - [Currently archived products](software_stack/cines_software_stack/spack_products_catalog.md#currently-archived-products)
+  - [CINES’ AI virtual environments](software_stack/cines_software_stack/venv_ai.md)
+    - [Overview](software_stack/cines_software_stack/venv_ai.md#overview)
+    - [Creating an AI venv](software_stack/cines_software_stack/venv_ai.md#creating-an-ai-venv)
+    - [Activating the venv](software_stack/cines_software_stack/venv_ai.md#activating-the-venv)
+    - [ROCm environment variables](software_stack/cines_software_stack/venv_ai.md#rocm-environment-variables)
+    - [Dependency management with `poverlay-pip`](software_stack/cines_software_stack/venv_ai.md#dependency-management-with-poverlay-pip)
+    - [Snapshots, duplication and rollback](software_stack/cines_software_stack/venv_ai.md#snapshots-duplication-and-rollback)
+    - [Managing blacklist and whitelist](software_stack/cines_software_stack/venv_ai.md#managing-blacklist-and-whitelist)
+    - [Key points / usage best practices](software_stack/cines_software_stack/venv_ai.md#key-points-usage-best-practices)
+    - [Upgrade wheels / compile ROCM compatible wheels versions](software_stack/cines_software_stack/venv_ai.md#upgrade-wheels-compile-rocm-compatible-wheels-versions)
+    - [Example VLLM](software_stack/cines_software_stack/venv_ai.md#example-vllm)
+    - [Example 2: Installing `boltzgen`](software_stack/cines_software_stack/venv_ai.md#example-2-installing-boltzgen)
+    - [Example 2: Using `alphafold3`](software_stack/cines_software_stack/venv_ai.md#example-2-using-alphafold3)
+    - [Available modules](software_stack/cines_software_stack/venv_ai.md#available-modules)
+    - [Last version of principal packages](software_stack/cines_software_stack/venv_ai.md#last-version-of-principal-packages)
+  - [Spack-user : Using pre-configured Spack installation on Adastra](software_stack/spack_user/index.md)
+    - [Getting started](software_stack/spack_user/index.md#getting-started)
+    - [Available Preconfigured Compilers](software_stack/spack_user/index.md#available-preconfigured-compilers)
+    - [Troubleshooting](software_stack/spack_user/index.md#troubleshooting)
+    - [Limitations](software_stack/spack_user/index.md#limitations)
+    - [Recommendations](software_stack/spack_user/index.md#recommendations)
+    - [Further reading](software_stack/spack_user/index.md#further-reading)
+  - [Tools](software_stack/tools/index.md)
+    - [CINES Spack modules](software_stack/tools/index.md#cines-spack-modules)
+    - [Building software](software_stack/tools/index.md#building-software)
+    - [Conda](software_stack/tools/index.md#conda)
+    - [Debugging](software_stack/tools/index.md#debugging)
+    - [Julia](software_stack/tools/index.md#julia)
+    - [Jupyter](software_stack/tools/index.md#jupyter)
+    - [Linker, assembly, ABI](software_stack/tools/index.md#linker-assembly-abi)
+    - [Monitoring](software_stack/tools/index.md#monitoring)
+    - [ParaView & VTK](software_stack/tools/index.md#paraview-vtk)
+    - [Profiling](software_stack/tools/index.md#profiling)
+    - [Python](software_stack/tools/index.md#python)
+    - [R (project)](software_stack/tools/index.md#r-project)
+    - [Trivia](software_stack/tools/index.md#trivia)
+  - [Libraries & toolchains](software_stack/libraries/index.md)
+    - [CINES Spack modules](software_stack/libraries/index.md#cines-spack-modules)
+    - [Example script for CINES Spack modules libraries](software_stack/libraries/index.md#example-script-for-cines-spack-modules-libraries)
+    - [Apex](software_stack/libraries/index.md#apex)
+    - [BLAS, LAPACK & ScaLAPACK](software_stack/libraries/index.md#blas-lapack-scalapack)
+    - [Boltz](software_stack/libraries/index.md#boltz)
+    - [C++ standard parallelization (STDPAR)](software_stack/libraries/index.md#c-standard-parallelization-stdpar)
+    - [Deepspeed](software_stack/libraries/index.md#deepspeed)
+    - [Flash attention (v1/v2)](software_stack/libraries/index.md#flash-attention-v1-v2)
+    - [HDF5](software_stack/libraries/index.md#hdf5)
+    - [LLVM & GCC toolchain](software_stack/libraries/index.md#llvm-gcc-toolchain)
+    - [Low level primitives](software_stack/libraries/index.md#low-level-primitives)
+    - [MIOpen](software_stack/libraries/index.md#miopen)
+    - [MPI](software_stack/libraries/index.md#mpi)
+    - [OpenCL](software_stack/libraries/index.md#opencl)
+    - [OpenMP](software_stack/libraries/index.md#openmp)
+    - [PyTorch](software_stack/libraries/index.md#pytorch)
+    - [RCCL](software_stack/libraries/index.md#rccl)
+    - [ROCm](software_stack/libraries/index.md#rocm)
+    - [SCALE](software_stack/libraries/index.md#scale)
+    - [Sycl](software_stack/libraries/index.md#sycl)
+    - [The `transformers` & `datasets` libraries](software_stack/libraries/index.md#the-transformers-datasets-libraries)
+    - [vLLM](software_stack/libraries/index.md#vllm)
+  - [Containers](software_stack/containers/index.md)
+    - [Available containers](software_stack/containers/index.md#available-containers)
+    - [Using a container](software_stack/containers/index.md#using-a-container)
+  - [Simulation software scripts and tips](software_stack/simulation_software/index.md)
+    - [CINES software stack](software_stack/simulation_software/index.md#cines-software-stack)
+    - [Other simulation softwares](software_stack/simulation_software/index.md#other-simulation-softwares)
+
+- [Porting & optimization](porting_optimization/index.md)
+  - [Porting to GPU](porting_optimization/index.md#porting-to-gpu)
+    - [GPUs, pros and cons](porting_optimization/index.md#gpus-pros-and-cons)
+    - [Available programming technologies](porting_optimization/index.md#available-programming-technologies)
+    - [Minimal viable speedup](porting_optimization/index.md#minimal-viable-speedup)
+    - [Porting process](porting_optimization/index.md#porting-process)
+  - [Performance tuning and monitoring](porting_optimization/index.md#performance-tuning-and-monitoring)
+    - [Proper binding, why and how](porting_optimization/index.md#proper-binding-why-and-how)
+    - [Proper pinning, why and how](porting_optimization/index.md#proper-pinning-why-and-how)
+    - [Scalar (CPU) vs vectorial (GPGPU)](porting_optimization/index.md#scalar-cpu-vs-vectorial-gpgpu)
+    - [GPU specific](porting_optimization/index.md#gpu-specific)
+
+- [External documentation and training resources](external_documentation_and_training_resources/index.md)
+  - [Software engineering](external_documentation_and_training_resources/index.md#software-engineering)
+    - [Algorithm and generic programming](external_documentation_and_training_resources/index.md#algorithm-and-generic-programming)
+    - [Code quality](external_documentation_and_training_resources/index.md#code-quality)
+    - [The C and C++ languages](external_documentation_and_training_resources/index.md#the-c-and-c-languages)
+    - [Floating point computation](external_documentation_and_training_resources/index.md#floating-point-computation)
+    - [Concurrency for parallel software](external_documentation_and_training_resources/index.md#concurrency-for-parallel-software)
+    - [Compiler infrastructure](external_documentation_and_training_resources/index.md#compiler-infrastructure)
+    - [Generating (pseudo) random numbers](external_documentation_and_training_resources/index.md#generating-pseudo-random-numbers)
+    - [CPU programming](external_documentation_and_training_resources/index.md#cpu-programming)
+    - [GPU programming](external_documentation_and_training_resources/index.md#gpu-programming)
+    - [Notions of debugging](external_documentation_and_training_resources/index.md#notions-of-debugging)
+    - [A note on benchmarks](external_documentation_and_training_resources/index.md#a-note-on-benchmarks)
+    - [The Bash Unix shell](external_documentation_and_training_resources/index.md#the-bash-unix-shell)
+    - [On the issues encountered in software engineering](external_documentation_and_training_resources/index.md#on-the-issues-encountered-in-software-engineering)
+    - [Network programming, distributed and shared memory abstractions](external_documentation_and_training_resources/index.md#network-programming-distributed-and-shared-memory-abstractions)
+    - [Choosing a license](external_documentation_and_training_resources/index.md#choosing-a-license)
+  - [Hardware for HPC](external_documentation_and_training_resources/index.md#hardware-for-hpc)
+    - [Fast forward program](external_documentation_and_training_resources/index.md#fast-forward-program)
+    - [Large GPU die issues](external_documentation_and_training_resources/index.md#large-gpu-die-issues)
+    - [MI300A](external_documentation_and_training_resources/index.md#mi300a)
+  - [Other](external_documentation_and_training_resources/index.md#other)
+    - [Similar HPC systems’ documentation](external_documentation_and_training_resources/index.md#similar-hpc-systems-documentation)
+    - [Standards](external_documentation_and_training_resources/index.md#standards)
+    - [Quantic](external_documentation_and_training_resources/index.md#quantic)
+
+- [FAQ & known issues](other/faq_and_known_issues.md)
+  - [FAQ](other/faq_and_known_issues.md#faq)
+  - [Known issues](other/faq_and_known_issues.md#known-issues)
+
+- [Machine status](other/machine_status.md)
+  - [Adastra’s logbook](other/machine_status.md#adastra-s-logbook)
+  - [MI250 partition status](other/machine_status.md#mi250-partition-status)
+  - [MI300 partition status](other/machine_status.md#mi300-partition-status)
+  - [GENOA partition status](other/machine_status.md#genoa-partition-status)
+  - [HPDA partition status](other/machine_status.md#hpda-partition-status)
+
+- [CINES virtual assistant](other/cines_virtual_assistant.md)
+
+- [Adastra Update - Changelogs](other/changelogs.md)
+  - [New Features and Important Changes](other/changelogs.md#new-features-and-important-changes)
+    - [HPE Supported Versions](other/changelogs.md#hpe-supported-versions)
+    - [Non-functional LAMMPS Versions](other/changelogs.md#non-functional-lammps-versions)
+    - [OpenCL Modules](other/changelogs.md#opencl-modules)
+    - [ROCm Version Compatibility with CPE/25.09](other/changelogs.md#rocm-version-compatibility-with-cpe-25-09)
+    - [MPICH Versions < 8.1.28](other/changelogs.md#mpich-versions-8-1-28)
+    - [Graphics Libraries on Login Nodes](other/changelogs.md#graphics-libraries-on-login-nodes)
+    - [Deployment of CINES Software Stack (develop) 5.0.0](other/changelogs.md#deployment-of-cines-software-stack-develop-5-0-0)
+    - [Additional Information](other/changelogs.md#additional-information)
+    - [HPE Documentation](other/changelogs.md#hpe-documentation)
+    - [Migration Support](other/changelogs.md#migration-support)
+
+- [Contacting CINES](other/contact.md)
