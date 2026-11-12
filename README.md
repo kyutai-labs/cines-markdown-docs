@@ -21,11 +21,6 @@ grep -n '^#' docs/user_support/index.md   # list headings of a (large) page
 
 Some pages are large (100 KB+): grep for the heading or anchor first, then read only the relevant range.
 
-## Running Claude Code on Adastra
-
-The login nodes kill any process after 15 minutes of CPU time. [`claude-code/`](claude-code/README.md) has two
-scripts that keep a Claude Code session going across those kills and let Claude restart itself cleanly first.
-
 ## Updating
 
 A [GitHub Actions workflow](.github/workflows/update-docs.yml) regenerates `docs/` every day and pushes a commit
